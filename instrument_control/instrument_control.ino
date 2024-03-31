@@ -55,6 +55,23 @@ void step(stepperCtrl *motor) {
       motor->pos < motor->targetPos ? motor->pos++ : motor->pos--;
 }
 
+int interp(map_t* c, int speed)
+{
+  int i;
+  int n = 12;
+    
+  for( i = 0; i < n-1; i++ ){
+    if ( c[i].speed <= speed && c[i+1].speed >= speed ){
+      int diffSpeed = speed - c[i].speed;
+      int diffStep = c[i+1].speed - c[i].speed;
+
+      return (int)(c[i].step + ( c[i+1].step - c[i].step ) * diffSpeed / diffStep); 
+    }
+  }
+
+  return 0; // Out of range
+}
+
 void setup() {
  	Serial.begin(115200);
   Serial.setTimeout(10);
