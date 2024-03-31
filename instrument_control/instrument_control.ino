@@ -94,6 +94,7 @@ void setup() {
   if (!indexPulse) {
     Serial.println("Moving away from index");
     steppers[SPEED_CTRL]->targetPos = -100;
+    digitalWrite(steppers[SPEED_CTRL]->dirPin, HIGH);
     while (steppers[SPEED_CTRL]->targetPos != steppers[SPEED_CTRL]->pos) {
       step(steppers[SPEED_CTRL]);
       delay(1);
@@ -102,6 +103,7 @@ void setup() {
   
   Serial.println("starting calibration");
   indexPulse = digitalRead(26);
+  digitalWrite(steppers[SPEED_CTRL]->dirPin, LOW);
   while(indexPulse) {
     indexPulse = digitalRead(26);
     // Serial.println(indexPulse);
@@ -117,6 +119,7 @@ void setup() {
   if (!indexPulse) {
     Serial.println("Moving away from index");
     steppers[VARIO_CTRL]->targetPos = -100;
+    digitalWrite(steppers[VARIO_CTRL]->dirPin, HIGH);
     while (steppers[VARIO_CTRL]->targetPos != steppers[VARIO_CTRL]->pos) {
       step(steppers[VARIO_CTRL]);
       delay(1);
@@ -125,6 +128,7 @@ void setup() {
   
   Serial.println("starting calibration");
   indexPulse = digitalRead(24);
+  digitalWrite(steppers[VARIO_CTRL]->dirPin, LOW);
   while(indexPulse) {
     indexPulse = digitalRead(24);
     // Serial.println(indexPulse);
