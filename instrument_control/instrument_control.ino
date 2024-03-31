@@ -76,9 +76,9 @@ void setup() {
   indexPulse = digitalRead(26);
   if (!indexPulse) {
     Serial.println("Moving away from index");
-    steppers[ALTI_CTRL]->targetPos = -100;
-    while (steppers[ALTI_CTRL]->targetPos != steppers[ALTI_CTRL]->pos) {
-      step(steppers[ALTI_CTRL]);
+    steppers[SPEED_CTRL]->targetPos = -100;
+    while (steppers[SPEED_CTRL]->targetPos != steppers[SPEED_CTRL]->pos) {
+      step(steppers[SPEED_CTRL]);
       delay(1);
     }
   }
@@ -88,11 +88,36 @@ void setup() {
   while(indexPulse) {
     indexPulse = digitalRead(26);
     // Serial.println(indexPulse);
-    steppers[ALTI_CTRL]->targetPos++;
-    step(steppers[ALTI_CTRL]);
+    steppers[SPEED_CTRL]->targetPos++;
+    step(steppers[SPEED_CTRL]);
     delayMicroseconds(500);
     // delay(1);
   }
+  steppers[SPEED_CTRL]->targetPos = 0;
+  steppers[SPEED_CTRL]->pos = 0;
+
+    indexPulse = digitalRead(24);
+  if (!indexPulse) {
+    Serial.println("Moving away from index");
+    steppers[VARIO_CTRL]->targetPos = -100;
+    while (steppers[VARIO_CTRL]->targetPos != steppers[VARIO_CTRL]->pos) {
+      step(steppers[VARIO_CTRL]);
+      delay(1);
+    }
+  }
+  
+  Serial.println("starting calibration");
+  indexPulse = digitalRead(24);
+  while(indexPulse) {
+    indexPulse = digitalRead(24);
+    // Serial.println(indexPulse);
+    steppers[VARIO_CTRL]->targetPos++;
+    step(steppers[VARIO_CTRL]);
+    delayMicroseconds(500);
+    // delay(1);
+  }
+  steppers[VARIO_CTRL]->targetPos = 0;
+  steppers[VARIO_CTRL]->pos = 0;
 }
 
 
