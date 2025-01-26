@@ -109,8 +109,8 @@ void setup() {
     // Serial.println(indexPulse);
     steppers[SPEED_CTRL]->targetPos++;
     step(steppers[SPEED_CTRL]);
-    delayMicroseconds(500);
-    // delay(1);
+    // delayMicroseconds(750);
+    delay(1);
   }
   steppers[SPEED_CTRL]->targetPos = 0;
   steppers[SPEED_CTRL]->pos = 0;
